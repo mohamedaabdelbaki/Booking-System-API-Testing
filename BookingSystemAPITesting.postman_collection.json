@@ -1,0 +1,862 @@
+{
+	"info": {
+		"_postman_id": "6bf2dd6a-e133-4e46-893b-96540862877a",
+		"name": "MohamedAhmed_API4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "51102777",
+		"_collection_link": "https://mohamedaabdelbaki6-2972438.postman.co/workspace/Mohamed-Ahmed's-Workspace~fa99877d-6859-4801-8ad3-4a8e4bbb18a7/collection/51102777-6bf2dd6a-e133-4e46-893b-96540862877a?action=share&source=collection_link&creator=51102777"
+	},
+	"item": [
+		{
+			"name": "Retrieve All Rooms",
+			"item": [
+				{
+					"name": "Verify that the third room is a suite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Third room is a Suite\", function () {\r",
+									"    let data = pm.response.json();\r",
+									"    pm.expect(data.rooms[2].type).to.equal(\"Suite\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://automationintesting.online/api/room",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"room"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room Details",
+			"item": [
+				{
+					"name": "Verify that double room provides a TV as one of the features.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Double room has TV\", function () {\r",
+									"    let data = pm.response.json();\r",
+									"    let doubleRoom=data.rooms[1];\r",
+									"    pm.expect(doubleRoom.features).to.include(\"TV\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/reservation/2?checkin=2026-01-10&checkout=2026-01-11"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "https://automationintesting.online/api/room",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"room"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book a Room",
+			"item": [
+				{
+					"name": "Verify if double room is available",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var rooms = pm.response.json().rooms;\r",
+									"var doubleAvailable = false;\r",
+									"for (var i = 0; i < rooms.length; i++) {\r",
+									"    if (rooms[i].type === \"Double\") {\r",
+									"        doubleAvailable = true;\r",
+									"        break;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Double room is available\", function () {\r",
+									"    pm.expect(doubleAvailable).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"checkin\": {{checkin}},\r\n  \"checkout\": {{Checkout}}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://automationintesting.online/api/room?",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"room"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify booking the double room",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var booking = pm.response.json();\r",
+									"pm.test(\"Booking successful\", function () {\r",
+									"    pm.expect(booking.bookingid).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"bookingFirstName\", \"mmmmm\");\r",
+									"pm.environment.set(\"bookingLastName\", \"nnnnn\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://automationintesting.online"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/reservation/2?checkin=2026-01-01&checkout=2026-01-03"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							},
+							{
+								"key": "Cookie",
+								"value": "token=L6V92EjdvV7gCW2P"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"roomid\": 2,\r\n  \"firstname\": \"mmmmm\",\r\n  \"lastname\": \"nnnnn\",\r\n  \"depositpaid\": false,\r\n  \"bookingdates\": {\r\n    \"checkin\": \"2026-01-19\",\r\n    \"checkout\": \"2026-01-22\"\r\n  },\r\n  \"email\": \"997da50f76@webxio.pro\",\r\n  \"phone\": \"011 45678910\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://automationintesting.online/api/booking",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Login and Booking Verification",
+			"item": [
+				{
+					"name": "Verify login as admin using the admin credentials Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var login = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Admin login successful\", function () {\r",
+									"    pm.expect(login.token).to.exist;\r",
+									"});\r",
+									"pm.environment.set(\"AuthToken\", login.token);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://automationintesting.online"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/admin"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"admin\",\"password\":\"password\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://automationintesting.online/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify that the booking includes the same name you used",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();\r",
+									"var firstName = pm.environment.get(\"bookingFirstName\");\r",
+									"var lastName = pm.environment.get(\"bookingLastName\");\r",
+									"\r",
+									"var fullName = firstName + \" \" + lastName;\r",
+									"\r",
+									"var found = false;\r",
+									"for (var i = 0; i < data.report.length; i++) {\r",
+									"    if (data.report[i].title.includes(fullName)) {\r",
+									"        found = true;\r",
+									"        break;\r",
+									"    }\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Booking is found in report\", function () {\r",
+									"    pm.expect(found).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var token = pm.cookies.get(\"token\");\r",
+									"if (token) {\r",
+									"    pm.environment.set(\"sessionToken\", token);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/admin/report"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{AuthToken}}"
+							}
+						],
+						"url": {
+							"raw": "https://automationintesting.online/api/report",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"report"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": ".Add a New Room",
+			"item": [
+				{
+					"name": "Family room with 3 features",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"room created successfully\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://automationintesting.online"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/admin/rooms"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							},
+							{
+								"key": "Cookie",
+								"value": "token={{AuthToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"roomName\":\"4\",\"type\":\"Family\",\"accessible\":true,\"description\":\"Please enter a description for this room\",\"image\":\"https://www.mwtestconsultancy.co.uk/img/room1.jpg\",\"roomPrice\":\"310\",\"features\":[\"WiFi\",\"TV\",\"Views\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://automationintesting.online/api/room",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"room"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact Support",
+			"item": [
+				{
+					"name": "Verify sending short message to the support team",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message sent successfully\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "accept-language",
+								"value": "ar,en-US;q=0.9,en;q=0.8,ja;q=0.7"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "origin",
+								"value": "https://automationintesting.online"
+							},
+							{
+								"key": "priority",
+								"value": "u=1, i"
+							},
+							{
+								"key": "referer",
+								"value": "https://automationintesting.online/"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?1"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Android\""
+							},
+							{
+								"key": "sec-fetch-dest",
+								"value": "empty"
+							},
+							{
+								"key": "sec-fetch-mode",
+								"value": "cors"
+							},
+							{
+								"key": "sec-fetch-site",
+								"value": "same-origin"
+							},
+							{
+								"key": "user-agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"
+							},
+							{
+								"key": "Cookie",
+								"value": "token=sYpSXz9hwrMKUjJi"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"m\",\"email\":\"997da50f76@webxio.pro\",\"phone\":\"011 45678910\",\"subject\":\"room cancellation\",\"description\":\"Guests may cancel their reservation free \"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://automationintesting.online/api/message",
+							"protocol": "https",
+							"host": [
+								"automationintesting",
+								"online"
+							],
+							"path": [
+								"api",
+								"message"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

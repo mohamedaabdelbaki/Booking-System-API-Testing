@@ -31,13 +31,6 @@ API Testing using Postman
 6. Contact support
    - Send message using contact endpoint
 
-## Testing Techniques
-- API workflow testing
-- Response validation
-- Authentication testing
-- Admin authorization testing
-- Data verification
-
 ## Tools
 - Postman
 - Collection Runner
